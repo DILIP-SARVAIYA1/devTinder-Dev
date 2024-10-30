@@ -28,7 +28,7 @@ const Connections = () => {
   if (!connections) {
     return (
       <div className="text-center font-bold text-2xl mt-44 underline">
-        <span className="loading loading-ring loading-lg"></span>
+        <span className="loading loading-spinner loading-lg"></span>
       </div>
     );
   }

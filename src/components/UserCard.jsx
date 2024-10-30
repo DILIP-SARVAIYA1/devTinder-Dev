@@ -5,7 +5,7 @@ const UserCard = ({ data }) => {
 
   return (
     <div className="card card-compact bg-base-300 w-96 shadow-xl">
-      <img src={photoUrl} alt="Shoes" className="max-h-60" />
+      <img src={photoUrl} alt="Photo" className="max-h-72 object-cover" />
       <div className="card-body">
         <h2 className="card-title">{firstName + " " + lastName}</h2>
         <p>{gender}</p>
