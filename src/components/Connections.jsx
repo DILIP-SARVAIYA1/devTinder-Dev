@@ -9,6 +9,7 @@ import CardOfRequest from "./CardOfRequest";
 const Connections = () => {
   const connections = useSelector((store) => store.connections);
   const dispatch = useDispatch();
+
   const fetchConnections = async () => {
     try {
       const response = await axios.get(BASE_URL + "/user/connections", {
@@ -25,7 +26,11 @@ const Connections = () => {
   }, []);
 
   if (!connections) {
-    return <div>Loading...</div>;
+    return (
+      <div className="text-center font-bold text-2xl mt-44 underline">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
   }
 
   if (connections.length === 0) {
