@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { BASE_URL } from "../utils/constants";
 import { useDispatch } from "react-redux";
-import UserCard from "./userCard";
 import { addUser } from "../utils/userSlice";
 import axios from "axios";
+import UserCard from "./UserCard";
 
 const EditProfile = ({ user }) => {
   const dispatch = useDispatch();
   // Initialize state with empty strings to avoid null issues
-  const [firstName, setFirstName] = useState(user?.firstName);
-  const [lastName, setLastName] = useState(user?.lastName);
-  const [gender, setGender] = useState(user?.gender);
-  const [skills, setSkills] = useState(user?.skills);
-  const [about, setAbout] = useState(user?.about);
-  const [photoUrl, setPhotoUrl] = useState(user?.photoUrl);
+  const [firstName, setFirstName] = useState(user?.firstName || "");
+  const [lastName, setLastName] = useState(user?.lastName || "");
+  const [gender, setGender] = useState(user?.gender || "");
+  const [skills, setSkills] = useState(user?.skills || "");
+  const [about, setAbout] = useState(user?.about || "");
+  const [photoUrl, setPhotoUrl] = useState(user?.photoUrl || "");
   const [showTost, setShowToast] = useState(false);
 
   const editProfileData = async () => {
@@ -39,7 +39,7 @@ const EditProfile = ({ user }) => {
         setShowToast(false);
       }, 3000);
     } catch (error) {
-      console.error("Failed to update profile:", error.message);
+      console.log("Failed to update profile:", error.message);
     }
   };
 
@@ -71,6 +71,7 @@ const EditProfile = ({ user }) => {
             className="grow"
             placeholder="Gender"
             value={gender}
+            required
             onChange={(e) => setGender(e.target.value)}
           />
         </label>

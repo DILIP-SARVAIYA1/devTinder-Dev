@@ -1,15 +1,24 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 import { BASE_URL } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  const [email, setEmail] = useState("dilipsarvaiya992@gmail.com");
-  const [password, setPassword] = useState("Dilip@123");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [handleLoginSignUp, setHandleLoginSignUp] = useState(true);
+  const signUpData = {
+    firstName: firstName,
+    lastName: lastName,
+    emailId: email,
+    password: password,
+  };
 
   const handleLogin = async () => {
     try {
@@ -24,17 +33,50 @@ const Login = () => {
       dispatch(addUser(response.data));
       navigate("/");
     } catch (error) {
-      console.error(error.message);
+      console.log(error.message);
     }
+  };
+  const handleSignUp = async (firstName, lastName, email, password) => {
+    const response = await axios.post(BASE_URL + "/signup", signUpData, {
+      withCredentials: true,
+    });
+    dispatch(addUser(response.data));
+    navigate("/profile");
   };
 
   return (
-    <div className="hero mt-20">
+    <div className="hero mt-10 ">
       <div className="card bg-base-200 w-96 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title">LogIn Now</h2>
+          <h2 className="card-title">
+            {handleLoginSignUp ? "LogIn" : "Sign Up"}
+          </h2>
           <div className="card-actions justify-center">
-            <label className="input input-bordered flex items-center gap-2 my-5 w-full">
+            {!handleLoginSignUp && (
+              <label className="input input-bordered flex items-center gap-2 my-2 w-full">
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="Enter First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  required
+                />
+              </label>
+            )}
+            {!handleLoginSignUp && (
+              <label className="input input-bordered flex items-center gap-2 my-2 w-full">
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="Enter Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                />
+              </label>
+            )}
+            <label className="input input-bordered flex items-center gap-2 my-2 w-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -53,7 +95,7 @@ const Login = () => {
                 required
               />
             </label>
-            <label className="input input-bordered flex items-center gap-2 mb-5 w-full">
+            <label className="input input-bordered flex items-center gap-2 my-2 w-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 16 16"
@@ -76,9 +118,24 @@ const Login = () => {
               />
             </label>
           </div>
-          <button className="btn btn-primary my-10" onClick={handleLogin}>
-            LogIn
-          </button>
+          {handleLoginSignUp ? (
+            <button className="btn btn-primary my-5" onClick={handleLogin}>
+              LogIn
+            </button>
+          ) : (
+            <button className="btn btn-primary my-5" onClick={handleSignUp}>
+              SignUp
+            </button>
+          )}
+
+          <p
+            className="cursor-pointer un"
+            onClick={() => setHandleLoginSignUp(!handleLoginSignUp)}
+          >
+            {handleLoginSignUp
+              ? "Don't have an account?"
+              : "Already have an account?"}
+          </p>
         </div>
       </div>
     </div>

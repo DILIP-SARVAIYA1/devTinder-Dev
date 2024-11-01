@@ -6,8 +6,6 @@ import { addRequest, removeRequest } from "../utils/requestSlice";
 
 const Requests = () => {
   const requests = useSelector((store) => store.request);
-  console.log(requests);
-
   const dispatch = useDispatch();
 
   const updateRequestStatus = async (status, id) => {
@@ -19,7 +17,6 @@ const Requests = () => {
       }
     );
     dispatch(removeRequest(id));
-    console.log(response);
   };
   const fetchRequests = async () => {
     try {
@@ -28,7 +25,7 @@ const Requests = () => {
       });
       dispatch(addRequest(response.data.data));
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
   useEffect(() => {

@@ -17,7 +17,7 @@ const Connections = () => {
       });
       dispatch(addConnection(response.data.data));
     } catch (error) {
-      console.error("Failed to fetch connections:", error.message);
+      console.log("Failed to fetch connections:", error.message);
     }
   };
 

@@ -1,7 +1,23 @@
+import axios from "axios";
 import React from "react";
+import { BASE_URL } from "../utils/constants";
+import { useDispatch } from "react-redux";
+import { removeFeedData } from "../utils/feedDataSlice";
 
 const UserCard = ({ data }) => {
-  const { firstName, lastName, photoUrl, skills, gender, about } = data;
+  const { _id, firstName, lastName, photoUrl, skills, gender, about } = data;
+  const dispatch = useDispatch();
+
+  const updateRequestStatus = async (status, id) => {
+    const response = await axios.post(
+      `${BASE_URL}/request/${status}/${id}`,
+      {},
+      {
+        withCredentials: true,
+      }
+    );
+    dispatch(removeFeedData(id));
+  };
 
   return (
     <div className="card card-compact bg-base-300 w-96 shadow-xl">
@@ -12,8 +28,18 @@ const UserCard = ({ data }) => {
         <p>{skills}</p>
         <p>{about}</p>
         <div className="card-actions justify-center my-4 gap-10">
-          <button className="btn btn-primary">Ignored</button>
-          <button className="btn btn-secondary">Interested</button>
+          <button
+            className="btn btn-primary"
+            onClick={() => updateRequestStatus("ignored", _id)}
+          >
+            Ignored
+          </button>
+          <button
+            className="btn btn-secondary"
+            onClick={() => updateRequestStatus("interested", _id)}
+          >
+            Interested
+          </button>
         </div>
       </div>
     </div>

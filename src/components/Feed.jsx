@@ -1,17 +1,19 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { BASE_URL } from "../utils/constants";
-import UserCard from "./userCard";
+import UserCard from "./UserCard";
+import { useDispatch, useSelector } from "react-redux";
+import { addFeedData } from "../utils/feedDataSlice";
 
 const Feed = () => {
-  const [feedData, setFeedData] = useState(null);
+  const feedData = useSelector((state) => state.feedData);
+  const dispatch = useDispatch();
   const getFeedData = async () => {
     try {
       const response = await axios.get(`${BASE_URL}/feed`, {
         withCredentials: true,
       });
-      response.data;
-      setFeedData(response.data);
+      dispatch(addFeedData(response.data));
     } catch (error) {}
   };
   useEffect(() => {
@@ -19,8 +21,10 @@ const Feed = () => {
   }, []);
   return (
     feedData && (
-      <div className="flex justify-center items-center mt-20">
-        <UserCard data={feedData[0]} />
+      <div className="flex relative justify-center items-center mt-20">
+        {feedData.map((data) => {
+          return <UserCard key={data._id} data={data} />;
+        })}
       </div>
     )
   );
