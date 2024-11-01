@@ -9,7 +9,7 @@ const Requests = () => {
   const dispatch = useDispatch();
 
   const updateRequestStatus = async (status, id) => {
-    const response = await axios.post(
+    await axios.post(
       `${BASE_URL}/request/review/${status}/${id}`,
       {},
       {
