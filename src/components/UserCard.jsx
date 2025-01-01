@@ -9,7 +9,7 @@ const UserCard = ({ data }) => {
   const dispatch = useDispatch();
 
   const updateRequestStatus = async (status, id) => {
-    const response = await axios.post(
+    await axios.post(
       `${BASE_URL}/request/${status}/${id}`,
       {},
       {
@@ -20,14 +20,14 @@ const UserCard = ({ data }) => {
   };
 
   return (
-    <div className="card card-compact bg-base-300 w-96 shadow-xl">
+    <div className=" card card-compact bg-base-300 w-96 shadow-xl">
       <img src={photoUrl} alt="Photo" className="max-h-72 object-cover" />
       <div className="card-body">
         <h2 className="card-title">{firstName + " " + lastName}</h2>
         <p>{gender}</p>
         <p>{skills}</p>
         <p>{about}</p>
-        <div className="card-actions justify-center my-4 gap-10">
+        <div className="card-actions justify-center my-4">
           <button
             className="btn btn-primary"
             onClick={() => updateRequestStatus("ignored", _id)}

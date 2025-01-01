@@ -19,12 +19,23 @@ const Feed = () => {
   useEffect(() => {
     getFeedData();
   }, []);
+  if (!feedData) {
+    return (
+      <div className="text-center font-bold text-2xl mt-44 underline">
+        <span className="loading loading-spinner loading-lg"></span>
+      </div>
+    );
+  }
+  if (feedData.length === 0)
+    return (
+      <div className="text-center font-bold text-2xl m-4 underline">
+        No new user available
+      </div>
+    );
   return (
     feedData && (
-      <div className="flex relative justify-center items-center mt-20">
-        {feedData.map((data) => {
-          return <UserCard key={data._id} data={data} />;
-        })}
+      <div className="flex justify-center mt-10">
+        <UserCard data={feedData[0]} />;
       </div>
     )
   );

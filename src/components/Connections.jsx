@@ -44,7 +44,7 @@ const Connections = () => {
   return (
     connections && (
       <div>
-        <div className="text-center font-bold text-2xl m-4 underline">
+        <div className="text-center font-bold text-2xl m-4 underline overflow-y-scroll">
           My Connections
         </div>
         <div>
